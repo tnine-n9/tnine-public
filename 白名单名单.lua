@@ -5,14 +5,10 @@
     {
       "username": "2006_Painfulwords",
       "add_time": "2025/11/5 20:53:27"
-    }
+    },
     {
-      "username": "jhxmeiyoujibo",
+      "username": "12434",
       "add_time": "2025/12/8 16:47:28"
-    }
-    {
-      "username": "XXCHRISTOPHER_Deltax",
-      "add_time": "2025/12/8 16:47:29"
     }
   ],
   "blocked_users": [],
