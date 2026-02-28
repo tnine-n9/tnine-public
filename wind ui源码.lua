@@ -1,19 +1,3 @@
---[[
-     _      ___         ____  ______
-    | | /| / (_)__  ___/ / / / /  _/
-    | |/ |/ / / _ \/ _  / /_/ // /  
-    |__/|__/_/_//_/\_,_/\____/___/
-    
-    v1.6.62  |  2025-12-09  |  Roblox UI Library for scripts
-    
-    To view the source code, see the `src/` folder on the official GitHub repository.
-    
-    Author: Footagesus (Footages, .ftgs, oftgs)
-    Github: https://github.com/Footagesus/WindUI
-    Discord: https://discord.gg/ftgs-development-hub-1300692552005189632
-    License: MIT
-]]
-
 local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}end return a.cache[b].c end}do function a.a()return{
 
 
@@ -11939,22 +11923,22 @@ return F
 end
 
 
-as:CreateTopbarButton("Close","x",function()
+as:CreateTopbarButton("关闭","x",function()
 if not as.IgnoreAlerts then
 as:SetToTheCenter()
 as:Dialog{
 
-Title="Close Window",
-Content="Do you want to close this window? You will not be able to open it again.",
+Title="关闭脚本",
+Content="你真的想关掉Xcellent Efficiency Hub吗",
 Buttons={
 {
-Title="Cancel",
+Title="不关闭",
 
 Callback=function()end,
 Variant="Secondary",
 },
 {
-Title="Close Window",
+Title="关闭",
 
 Callback=function()as:Destroy()end,
 Variant="Primary",
