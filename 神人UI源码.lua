@@ -215,7 +215,7 @@ function library.new(library, name, theme)
   DropShadow.BackgroundTransparency = 1.000
   DropShadow.Position = UDim2.new(0.5, 0, 0.5, 0)
   DropShadow.Size = UDim2.new(1, 10, 1, 10)
-  DropShadow.Image = "rbxassetid://88218863287921" --背景
+  DropShadow.Image = "https://chaton-images.s3.us-east-2.amazonaws.com/1m02ENkCWPZ5UHSEek0m0jpEQZ3fg3jrlYIIoYiCWnj1l8Zi7jIbg3NPt1h31Psq_2508x1672x4154158.png" --背景
   DropShadow.ImageColor3 = Color3.fromRGB(255, 255, 255)
   DropShadow.SliceCenter = Rect.new(49, 49, 450, 450)
 
