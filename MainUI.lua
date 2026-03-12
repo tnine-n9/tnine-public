@@ -43,8 +43,8 @@ function Ripple(obj)
 end
 
 local toggled = false
-local switchingTabs = false
 
+local switchingTabs = false
 function switchTab(new)
     if switchingTabs then return end
     local old = Rainmiao.currentTab
@@ -168,7 +168,7 @@ function Rainmiao.new(Rainmiao, name, theme)
     local ScriptTitle = Instance.new("TextLabel")
     local DropShadowHolder = Instance.new("Frame")
     local DropShadow = Instance.new("ImageLabel")
-    local UIGradient = Instance.new("UIGradient")
+    -- 彩虹渐变已移除
     local UIGradientTitle = Instance.new("UIGradient")
     local DropShadowHolderCorner = Instance.new("UICorner")
 
@@ -197,7 +197,7 @@ function Rainmiao.new(Rainmiao, name, theme)
     Main.Parent = dogent
     Main.AnchorPoint = Vector2.new(0.5, 0.5)
     Main.BackgroundColor3 = Background
-    Main.BackgroundTransparency = bgTransparency
+    Main.BackgroundTransparency = 1  -- 完全透明
     Main.BorderColor3 = MainColor
     Main.Position = UDim2.new(0.5, 0, 0.5, 0)
     Main.Size = UDim2.new(0, 572, 0, 353)
@@ -223,11 +223,11 @@ function Rainmiao.new(Rainmiao, name, theme)
     DropShadow.ZIndex = 0
     DropShadow.Image = "rbxassetid://6015897843"
     DropShadow.ImageColor3 = Color3.fromRGB(255, 255, 255)
-    DropShadow.ImageTransparency = 0.2
+    DropShadow.ImageTransparency = 0.2  -- 半透明描边
     DropShadow.ScaleType = Enum.ScaleType.Slice
     DropShadow.SliceCenter = Rect.new(49, 49, 450, 450)
 
-    UIGradient:Destroy()
+    -- 移除彩虹渐变
 
     DropShadowHolderCorner.CornerRadius = UDim.new(0, 10)
     DropShadowHolderCorner.Parent = DropShadowHolder
@@ -400,13 +400,16 @@ function Rainmiao.new(Rainmiao, name, theme)
     RainbowBG.Name = "RainbowBG"
     RainbowBG.Parent = ToggleContainer
     RainbowBG.BackgroundColor3 = Color3.new(1,1,1)
-    RainbowBG.BackgroundTransparency = 0.2
+    RainbowBG.BackgroundTransparency = 1  -- 完全透明
     RainbowBG.Size = UDim2.new(1,0,1,0)
     RainbowBG.Position = UDim2.new(0,0,0,0)
     RainbowBG.ZIndex = 0
     local RainbowBGCorner = Instance.new("UICorner")
     RainbowBGCorner.CornerRadius = UDim.new(0.5, 0)
     RainbowBGCorner.Parent = RainbowBG
+
+    -- 移除彩虹渐变
+    -- local RainbowGradient = Instance.new("UIGradient") ...
 
     local ToggleButton = Instance.new("TextButton")
     ToggleButton.Name = "ToggleButton"
@@ -426,109 +429,33 @@ function Rainmiao.new(Rainmiao, name, theme)
     ToggleCorner.CornerRadius = UDim.new(0.5, 0)
     ToggleCorner.Parent = ToggleButton
 
-    drag(ToggleContainer, ToggleContainer)
-    drag(Main)
-
-    local themes = {
-        default = {
-            name = "Default",
-            bgTransparency = 0.6,
-            mainColor = Color3.fromRGB(0,0,0),
-            backgroundColor = Color3.fromRGB(0,0,0),
-            sideColor = Color3.fromRGB(0,0,0),
-            beijingColor = Color3.fromRGB(0,0,0),
-            textColor = Color3.fromRGB(255,255,255),
-            textGradient = ColorSequence.new({
-                ColorSequenceKeypoint.new(0, Color3.fromRGB(255,255,255)),
-                ColorSequenceKeypoint.new(1, Color3.fromRGB(255,255,255))
-            })
-        },
-        sakura = {
-            name = "Sakura",
-            bgTransparency = 0.6,
-            mainColor = Color3.fromRGB(255,200,200),
-            backgroundColor = Color3.fromRGB(255,200,200),
-            sideColor = Color3.fromRGB(255,200,200),
-            beijingColor = Color3.fromRGB(255,200,200),
-            textColor = Color3.fromRGB(255,255,255),
-            textGradient = ColorSequence.new({
-                ColorSequenceKeypoint.new(0, Color3.fromRGB(255,192,203)),
-                ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255,105,180)),
-                ColorSequenceKeypoint.new(1, Color3.fromRGB(255,192,203))
-            })
-        }
-    }
-
-    local function applyTheme(themeName)
-        local theme = themes[themeName] or themes.default
-        MainColor = theme.mainColor
-        Background = theme.backgroundColor
-        zyColor = theme.sideColor
-        beijingColor = theme.beijingColor
-        Rainmiao.flags.text_color = theme.textColor
-
-        Main.BackgroundColor3 = Background
-        Main.BackgroundTransparency = Rainmiao.flags.ui_transparency or theme.bgTransparency
-        DropShadow.ImageTransparency = Main.BackgroundTransparency
-        SideG.Color = ColorSequence.new(zyColor)
-        if ScriptTitle and ScriptTitle.UIGradient then
-            ScriptTitle.UIGradient.Color = theme.textGradient
-        end
-        Rainmiao:RefreshTextStyling()
-
-        for _, tab in ipairs(TabMain:GetChildren()) do
-            if tab:IsA("ScrollingFrame") then
-                for _, section in ipairs(tab:GetChildren()) do
-                    if section.Name == "Section" then
-                        for _, obj in ipairs(section.Objs:GetChildren()) do
-                            if obj:IsA("Frame") then
-                                for _, btn in ipairs(obj:GetChildren()) do
-                                    if btn:IsA("TextButton") and btn.Name ~= "MinSlider" and btn.Name ~= "AddSlider" then
-                                        btn.BackgroundColor3 = zyColor
-                                    end
-                                end
-                            end
-                        end
-                    end
-                end
-            end
-        end
-    end
-
-    local minimized = false
-    local originalSize = Main.Size
-    local originalPosition = Main.Position
-    local originalAnchor = Main.AnchorPoint
+    local uihide = false
+    ToggleButton.MouseButton1Click:Connect(function()
+        spawn(function()
+            Ripple(ToggleButton)
+        end)
+    end)
 
     ToggleButton.MouseButton1Click:Connect(function()
-        spawn(function() Ripple(ToggleButton) end)
-        if not minimized then
-            minimized = true
+        if not uihide then
+            uihide = true
             ToggleButton.Text = windowName
-            local targetCenter = Vector2.new(
-                ToggleContainer.AbsolutePosition.X + ToggleContainer.AbsoluteSize.X/2,
-                ToggleContainer.AbsolutePosition.Y + ToggleContainer.AbsoluteSize.Y/2
-            )
-            local targetPosUDim = UDim2.new(0, targetCenter.X, 0, targetCenter.Y)
-            local targetSize = UDim2.new(0, 50, 0, 50)
-            local tween = services.TweenService:Create(Main, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-                Position = targetPosUDim,
-                Size = targetSize
-            })
-            tween:Play()
-            tween.Completed:Connect(function()
-                Main.Visible = false
+            Main:TweenPosition(UDim2.new(0.5, 0, 2, 0), "Out", "Sine", 0.9, true)
+            task.delay(0.5, function()
+                if Main.Parent then
+                    Main.Visible = false
+                end
             end)
         else
-            minimized = false
             Main.Visible = true
-            local tween = services.TweenService:Create(Main, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-                Position = originalPosition,
-                Size = originalSize
-            })
-            tween:Play()
+            ToggleButton.Text = windowName
+            Main:TweenPosition(UDim2.new(0.5, 0, 0.5, 0), "Out", "Sine", 0.5, true)
+            uihide = false
         end
     end)
+
+    drag(ToggleContainer, ToggleContainer)
+    drag(Main)
 
     local window = {}
 
@@ -749,7 +676,7 @@ function Rainmiao.new(Rainmiao, name, theme)
                 LabelModule.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
                 LabelModule.BackgroundTransparency = 1.000
                 LabelModule.BorderSizePixel = 0
-                LabelModule.Position = UDim2.new(0, 0, 0, 0)
+                LabelModule.Position = UDim2.new(0, 0, NAN, 0)
                 LabelModule.Size = UDim2.new(0, 428, 0, 19)
 
                 TextLabel.Parent = LabelModule
@@ -1488,20 +1415,6 @@ function Rainmiao.new(Rainmiao, name, theme)
 
         return tab
     end
-
-    local settingsTab = window:Tab("Settings", "settings")
-    local settingsSection = settingsTab:section("UI Settings", true)
-    settingsSection:Slider("Background Transparency", "ui_transparency", 0.6, 0, 1, true, function(value)
-        Rainmiao.flags.ui_transparency = value
-        Main.BackgroundTransparency = value
-        DropShadow.ImageTransparency = value
-    end)
-    settingsSection:Dropdown("Theme", "ui_theme", {"Default", "Sakura"}, function(selected)
-        Rainmiao.flags.ui_theme = selected
-        applyTheme(selected)
-    end)
-
-    applyTheme("default")
 
     return window
 end
