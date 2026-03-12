@@ -161,16 +161,11 @@ function Rainmiao.new(Rainmiao, name, theme)
     local Main = Instance.new("Frame")
     local TabMain = Instance.new("Frame")
     local MainC = Instance.new("UICorner")
-    local SB = Instance.new("Frame")
-    local SBC = Instance.new("UICorner")
     local Side = Instance.new("Frame")
     local SideG = Instance.new("UIGradient")
     local TabBtns = Instance.new("ScrollingFrame")
     local TabBtnsL = Instance.new("UIListLayout")
     local ScriptTitle = Instance.new("TextLabel")
-    local SBG = Instance.new("UIGradient")
-    local Open = Instance.new("TextButton")
-    local UIG = Instance.new("UIGradient")
     local DropShadowHolder = Instance.new("Frame")
     local DropShadow = Instance.new("ImageLabel")
     local UIGradient = Instance.new("UIGradient")
@@ -266,7 +261,7 @@ function Rainmiao.new(Rainmiao, name, theme)
     TabMain.Parent = Main
     TabMain.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     TabMain.BackgroundTransparency = 1.000
-    TabMain.Position = UDim2.new(0.217000037, 0, 0, 3)
+    TabMain.Position = UDim2.new(0, 116, 0, 3)
     TabMain.Size = UDim2.new(0, 448, 0, 353)
 
     MainC.CornerRadius = UDim.new(0, 20)
@@ -276,23 +271,13 @@ function Rainmiao.new(Rainmiao, name, theme)
     DropShadowHolderCorner.CornerRadius = UDim.new(0, 10)
     DropShadowHolderCorner.Parent = DropShadowHolder
 
-    SB.Name = "SB"
-    SB.Parent = Main
-    SB.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    SB.BorderColor3 = MainColor
-    SB.Size = UDim2.new(0, 8, 0, 353)
-
-    SBC.CornerRadius = UDim.new(0, 6)
-    SBC.Name = "SBC"
-    SBC.Parent = SB
-
     Side.Name = "Side"
-    Side.Parent = SB
+    Side.Parent = Main
     Side.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     Side.BorderColor3 = Color3.fromRGB(255, 255, 255)
     Side.BorderSizePixel = 0
     Side.ClipsDescendants = true
-    Side.Position = UDim2.new(1, 0, 0, 0)
+    Side.Position = UDim2.new(0, 0, 0, 0)
     Side.Size = UDim2.new(0, 110, 0, 353)
     Side.BackgroundTransparency = 1
 
@@ -434,55 +419,69 @@ function Rainmiao.new(Rainmiao, name, theme)
 
     coroutine.wrap(NPLHKB_fake_script)()
 
-    SBG.Color = ColorSequence.new { ColorSequenceKeypoint.new(0.00, zyColor), ColorSequenceKeypoint.new(1.00, zyColor) }
-    SBG.Rotation = 90
-    SBG.Name = "SBG"
-    SBG.Parent = SB
-
     TabBtnsL:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
         TabBtns.CanvasSize = UDim2.new(0, 0, 0, TabBtnsL.AbsoluteContentSize.Y + 18)
     end)
 
+    local ToggleContainer = Instance.new("Frame")
+    ToggleContainer.Name = "ToggleContainer"
+    ToggleContainer.Parent = dogent
+    ToggleContainer.BackgroundTransparency = 1
+    ToggleContainer.Position = UDim2.new(0, 10, 0, 10)
+    ToggleContainer.Size = UDim2.new(0, 50, 0, 50)
+    ToggleContainer.ZIndex = 5
+
+    local RainbowBG = Instance.new("ImageLabel")
+    RainbowBG.Name = "RainbowBG"
+    RainbowBG.Parent = ToggleContainer
+    RainbowBG.BackgroundColor3 = Color3.new(1,1,1)
+    RainbowBG.BackgroundTransparency = 1
+    RainbowBG.Size = UDim2.new(1,0,1,0)
+    RainbowBG.Position = UDim2.new(0,0,0,0)
+    RainbowBG.ZIndex = 0
+    RainbowBG.Image = "rbxassetid://0"
+    RainbowBG.ImageColor3 = Color3.new(1,1,1)
+    RainbowBG.ImageTransparency = 0
+    local RainbowBGCorner = Instance.new("UICorner")
+    RainbowBGCorner.CornerRadius = UDim.new(0.5, 0)
+    RainbowBGCorner.Parent = RainbowBG
+
+    local RainbowGradient = Instance.new("UIGradient")
+    RainbowGradient.Color = ColorSequence.new {
+        ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 0)),
+        ColorSequenceKeypoint.new(0.10, Color3.fromRGB(255, 127, 0)),
+        ColorSequenceKeypoint.new(0.20, Color3.fromRGB(255, 255, 0)),
+        ColorSequenceKeypoint.new(0.30, Color3.fromRGB(0, 255, 0)),
+        ColorSequenceKeypoint.new(0.40, Color3.fromRGB(0, 255, 255)),
+        ColorSequenceKeypoint.new(0.50, Color3.fromRGB(0, 0, 255)),
+        ColorSequenceKeypoint.new(0.60, Color3.fromRGB(139, 0, 255)),
+        ColorSequenceKeypoint.new(0.70, Color3.fromRGB(255, 0, 0)),
+        ColorSequenceKeypoint.new(0.80, Color3.fromRGB(255, 127, 0)),
+        ColorSequenceKeypoint.new(0.90, Color3.fromRGB(255, 255, 0)),
+        ColorSequenceKeypoint.new(1.00, Color3.fromRGB(0, 255, 0))
+    }
+    RainbowGradient.Parent = RainbowBG
+
+    local rainbowTween = TweenService:Create(RainbowGradient, TweenInfo.new(7, Enum.EasingStyle.Linear, Enum.EasingDirection.In, -1), { Rotation = 360 })
+    rainbowTween:Play()
+
     local ToggleButton = Instance.new("TextButton")
     ToggleButton.Name = "ToggleButton"
-    ToggleButton.Parent = dogent
+    ToggleButton.Parent = ToggleContainer
     ToggleButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-    ToggleButton.BackgroundTransparency = 0
-    ToggleButton.Position = UDim2.new(0, 10, 0, 10)
-    ToggleButton.Size = UDim2.new(0, 50, 0, 50)
+    ToggleButton.BackgroundTransparency = 1
+    ToggleButton.Size = UDim2.new(1,0,1,0)
+    ToggleButton.Position = UDim2.new(0,0,0,0)
     ToggleButton.AutoButtonColor = false
     ToggleButton.Font = Enum.Font.GothamBold
     ToggleButton.Text = windowName
     ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
     ToggleButton.TextSize = 12
-    ToggleButton.ZIndex = 5
+    ToggleButton.ZIndex = 2
 
     local ToggleCorner = Instance.new("UICorner")
     ToggleCorner.CornerRadius = UDim.new(0.5, 0)
     ToggleCorner.Parent = ToggleButton
-
-    local function addGradientStroke(parent)
-        local strokes = {}
-        local layers = {
-            { color = Color3.fromRGB(255, 0, 0), thickness = 1.8, transparency = 0.0 },
-            { color = Color3.fromRGB(255, 120, 120), thickness = 2.8, transparency = 0.2 },
-            { color = Color3.fromRGB(255, 255, 255), thickness = 3.8, transparency = 0.4 },
-        }
-        for i, layer in ipairs(layers) do
-            local stroke = Instance.new("UIStroke")
-            stroke.Name = "GradientStrokeLayer" .. i
-            stroke.Parent = parent
-            stroke.Color = layer.color
-            stroke.Thickness = layer.thickness
-            stroke.Transparency = layer.transparency
-            stroke.LineJoinMode = Enum.LineJoinMode.Round
-            stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-            table.insert(strokes, stroke)
-        end
-        return strokes
-    end
-
-    local gradientStrokes = addGradientStroke(ToggleButton)
 
     local uihide = false
     ToggleButton.MouseButton1Click:Connect(function()
@@ -509,10 +508,8 @@ function Rainmiao.new(Rainmiao, name, theme)
         end
     end)
 
-    drag(ToggleButton, ToggleButton)
+    drag(ToggleContainer, ToggleContainer)
     drag(Main)
-
-    UIG.Parent = Open
 
     local window = {}
 
