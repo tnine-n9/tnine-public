@@ -1,8 +1,8 @@
 repeat task.wait() until game:IsLoaded()
-local tnine = {}
+local Rainmiao = {}
 local ToggleUI = false
-tnine.currentTab = nil
-tnine.flags = {}
+Rainmiao.currentTab = nil
+Rainmiao.flags = {}
 
 local services = setmetatable({}, {
     __index = function(t, k)
@@ -19,7 +19,7 @@ end
 
 function Ripple(obj)
     spawn(function()
-        if tnine.flags.hover_effect == false then return end
+        if Rainmiao.flags.hover_effect == false then return end
         if obj.ClipsDescendants ~= true then
             obj.ClipsDescendants = true
         end
@@ -43,21 +43,21 @@ function Ripple(obj)
 end
 
 local toggled = false
-
 local switchingTabs = false
+
 function switchTab(new)
     if switchingTabs then return end
-    local old = tnine.currentTab
+    local old = Rainmiao.currentTab
     if old == nil then
         new[2].Visible = true
-        tnine.currentTab = new
+        Rainmiao.currentTab = new
         services.TweenService:Create(new[1], TweenInfo.new(0.1), { ImageTransparency = 0 }):Play()
         services.TweenService:Create(new[1].TabText, TweenInfo.new(0.1), { TextTransparency = 0 }):Play()
         return
     end
     if old[1] == new[1] then return end
     switchingTabs = true
-    tnine.currentTab = new
+    Rainmiao.currentTab = new
     services.TweenService:Create(old[1], TweenInfo.new(0.1), { ImageTransparency = 0.2 }):Play()
     services.TweenService:Create(new[1], TweenInfo.new(0.1), { ImageTransparency = 0 }):Play()
     services.TweenService:Create(old[1].TabText, TweenInfo.new(0.1), { TextTransparency = 0.2 }):Play()
@@ -102,23 +102,23 @@ function drag(frame, hold)
     end)
 end
 
-function tnine:RefreshTextStyling()
+function Rainmiao:RefreshTextStyling()
     local Main = game:GetService("CoreGui")["frosty is cute"].Main
     for _, obj in ipairs(Main:GetDescendants()) do
         if obj:IsA("TextLabel") or obj:IsA("TextButton") or obj:IsA("TextBox") then
             if obj.Text ~= "" then
-                if tnine.flags.ui_font then
-                    obj.Font = tnine.flags.ui_font
+                if Rainmiao.flags.ui_font then
+                    obj.Font = Rainmiao.flags.ui_font
                 end
-                if tnine.flags.text_color then
-                    obj.TextColor3 = tnine.flags.text_color
+                if Rainmiao.flags.text_color then
+                    obj.TextColor3 = Rainmiao.flags.text_color
                 end
             end
         end
     end
 end
 
-function tnine.new(tnine, name, theme)
+function Rainmiao.new(Rainmiao, name, theme)
     local windowName = name or "Open"
     for _, v in next, services.CoreGui:GetChildren() do
         if v.Name == "frosty is cute" then
@@ -161,16 +161,11 @@ function tnine.new(tnine, name, theme)
     local Main = Instance.new("Frame")
     local TabMain = Instance.new("Frame")
     local MainC = Instance.new("UICorner")
-    local SB = Instance.new("Frame")
-    local SBC = Instance.new("UICorner")
     local Side = Instance.new("Frame")
     local SideG = Instance.new("UIGradient")
     local TabBtns = Instance.new("ScrollingFrame")
     local TabBtnsL = Instance.new("UIListLayout")
     local ScriptTitle = Instance.new("TextLabel")
-    local SBG = Instance.new("UIGradient")
-    local Open = Instance.new("TextButton")
-    local UIG = Instance.new("UIGradient")
     local DropShadowHolder = Instance.new("Frame")
     local DropShadow = Instance.new("ImageLabel")
     local UIGradient = Instance.new("UIGradient")
@@ -228,71 +223,26 @@ function tnine.new(tnine, name, theme)
     DropShadow.ZIndex = 0
     DropShadow.Image = "rbxassetid://6015897843"
     DropShadow.ImageColor3 = Color3.fromRGB(255, 255, 255)
-    DropShadow.ImageTransparency = 0
+    DropShadow.ImageTransparency = 0.2
     DropShadow.ScaleType = Enum.ScaleType.Slice
     DropShadow.SliceCenter = Rect.new(49, 49, 450, 450)
 
-    UIGradient.Color = ColorSequence.new {
-        ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 0)),
-        ColorSequenceKeypoint.new(0.10, Color3.fromRGB(255, 127, 0)),
-        ColorSequenceKeypoint.new(0.20, Color3.fromRGB(255, 255, 0)),
-        ColorSequenceKeypoint.new(0.30, Color3.fromRGB(0, 255, 0)),
-        ColorSequenceKeypoint.new(0.40, Color3.fromRGB(0, 255, 255)),
-        ColorSequenceKeypoint.new(0.50, Color3.fromRGB(0, 0, 255)),
-        ColorSequenceKeypoint.new(0.60, Color3.fromRGB(139, 0, 255)),
-        ColorSequenceKeypoint.new(0.70, Color3.fromRGB(255, 0, 0)),
-        ColorSequenceKeypoint.new(0.80, Color3.fromRGB(255, 127, 0)),
-        ColorSequenceKeypoint.new(0.90, Color3.fromRGB(255, 255, 0)),
-        ColorSequenceKeypoint.new(1.00, Color3.fromRGB(0, 255, 0))
-    }
-    UIGradient.Parent = DropShadow
+    UIGradient:Destroy()
 
-    local TweenService = game:GetService("TweenService")
-    local tweeninfo = TweenInfo.new(7, Enum.EasingStyle.Linear, Enum.EasingDirection.In, -1)
-    local tween = TweenService:Create(UIGradient, tweeninfo, { Rotation = 360 })
-    tween:Play()
-
-    function toggleui()
-        toggled = not toggled
-        spawn(function()
-            if toggled then
-                wait(0.3)
-            end
-        end)
-        Tween(Main, { 0.3, 'Sine', 'InOut' }, { Size = UDim2.new(0, 609, 0, (toggled and 505 or 0)) })
-    end
-
-    TabMain.Name = "TabMain"
-    TabMain.Parent = Main
-    TabMain.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    TabMain.BackgroundTransparency = 1.000
-    TabMain.Position = UDim2.new(0.217000037, 0, 0, 3)
-    TabMain.Size = UDim2.new(0, 448, 0, 353)
+    DropShadowHolderCorner.CornerRadius = UDim.new(0, 10)
+    DropShadowHolderCorner.Parent = DropShadowHolder
 
     MainC.CornerRadius = UDim.new(0, 20)
     MainC.Name = "MainC"
     MainC.Parent = Main
 
-    DropShadowHolderCorner.CornerRadius = UDim.new(0, 10)
-    DropShadowHolderCorner.Parent = DropShadowHolder
-
-    SB.Name = "SB"
-    SB.Parent = Main
-    SB.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    SB.BorderColor3 = MainColor
-    SB.Size = UDim2.new(0, 8, 0, 353)
-
-    SBC.CornerRadius = UDim.new(0, 6)
-    SBC.Name = "SBC"
-    SBC.Parent = SB
-
     Side.Name = "Side"
-    Side.Parent = SB
+    Side.Parent = Main
     Side.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     Side.BorderColor3 = Color3.fromRGB(255, 255, 255)
     Side.BorderSizePixel = 0
     Side.ClipsDescendants = true
-    Side.Position = UDim2.new(1, 0, 0, 0)
+    Side.Position = UDim2.new(0, 0, 0, 0)
     Side.Size = UDim2.new(0, 110, 0, 353)
     Side.BackgroundTransparency = 1
 
@@ -434,112 +384,151 @@ function tnine.new(tnine, name, theme)
 
     coroutine.wrap(NPLHKB_fake_script)()
 
-    SBG.Color = ColorSequence.new { ColorSequenceKeypoint.new(0.00, zyColor), ColorSequenceKeypoint.new(1.00, zyColor) }
-    SBG.Rotation = 90
-    SBG.Name = "SBG"
-    SBG.Parent = SB
-
     TabBtnsL:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
         TabBtns.CanvasSize = UDim2.new(0, 0, 0, TabBtnsL.AbsoluteContentSize.Y + 18)
     end)
 
-    local MainBackground = Instance.new("ImageLabel")
-    MainBackground.Name = "MainBackground"
-    MainBackground.Parent = Main
-    MainBackground.BackgroundColor3 = Color3.new(1,1,1)
-    MainBackground.BackgroundTransparency = 1
-    MainBackground.Size = UDim2.new(1,0,1,0)
-    MainBackground.ZIndex = 0
-    MainBackground.ImageTransparency = 1
-    local MainBackgroundCorner = Instance.new("UICorner")
-    MainBackgroundCorner.CornerRadius = MainC.CornerRadius
-    MainBackgroundCorner.Parent = MainBackground
+    local ToggleContainer = Instance.new("Frame")
+    ToggleContainer.Name = "ToggleContainer"
+    ToggleContainer.Parent = dogent
+    ToggleContainer.BackgroundTransparency = 1
+    ToggleContainer.Position = UDim2.new(0, 10, 0, 10)
+    ToggleContainer.Size = UDim2.new(0, 50, 0, 50)
+    ToggleContainer.ZIndex = 5
+
+    local RainbowBG = Instance.new("Frame")
+    RainbowBG.Name = "RainbowBG"
+    RainbowBG.Parent = ToggleContainer
+    RainbowBG.BackgroundColor3 = Color3.new(1,1,1)
+    RainbowBG.BackgroundTransparency = 0.2
+    RainbowBG.Size = UDim2.new(1,0,1,0)
+    RainbowBG.Position = UDim2.new(0,0,0,0)
+    RainbowBG.ZIndex = 0
+    local RainbowBGCorner = Instance.new("UICorner")
+    RainbowBGCorner.CornerRadius = UDim.new(0.5, 0)
+    RainbowBGCorner.Parent = RainbowBG
 
     local ToggleButton = Instance.new("TextButton")
     ToggleButton.Name = "ToggleButton"
-    ToggleButton.Parent = dogent
+    ToggleButton.Parent = ToggleContainer
     ToggleButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-    ToggleButton.BackgroundTransparency = 0
-    ToggleButton.Position = UDim2.new(0, 10, 0, 10)
-    ToggleButton.Size = UDim2.new(0, 50, 0, 50)
+    ToggleButton.BackgroundTransparency = 1
+    ToggleButton.Size = UDim2.new(1,0,1,0)
+    ToggleButton.Position = UDim2.new(0,0,0,0)
     ToggleButton.AutoButtonColor = false
     ToggleButton.Font = Enum.Font.GothamBold
     ToggleButton.Text = windowName
     ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
     ToggleButton.TextSize = 12
-    ToggleButton.ZIndex = 5
+    ToggleButton.ZIndex = 2
 
     local ToggleCorner = Instance.new("UICorner")
     ToggleCorner.CornerRadius = UDim.new(0.5, 0)
     ToggleCorner.Parent = ToggleButton
 
-    local ButtonBackground = Instance.new("ImageLabel")
-    ButtonBackground.Name = "ButtonBackground"
-    ButtonBackground.Parent = ToggleButton
-    ButtonBackground.BackgroundColor3 = Color3.new(1,1,1)
-    ButtonBackground.BackgroundTransparency = 1
-    ButtonBackground.Size = UDim2.new(1,0,1,0)
-    ButtonBackground.ZIndex = 0
-    ButtonBackground.ImageTransparency = 1
-    local ButtonBackgroundCorner = Instance.new("UICorner")
-    ButtonBackgroundCorner.CornerRadius = ToggleCorner.CornerRadius
-    ButtonBackgroundCorner.Parent = ButtonBackground
-
-    ToggleButton.ZIndex = 1
-    ToggleButton.TextZIndex = 2
-
-    local function addGradientStroke(parent)
-        local strokes = {}
-        local layers = {
-            { color = Color3.fromRGB(255, 0, 0), thickness = 1.8, transparency = 0.0 },
-            { color = Color3.fromRGB(255, 120, 120), thickness = 2.8, transparency = 0.2 },
-            { color = Color3.fromRGB(255, 255, 255), thickness = 3.8, transparency = 0.4 },
-        }
-        for i, layer in ipairs(layers) do
-            local stroke = Instance.new("UIStroke")
-            stroke.Name = "GradientStrokeLayer" .. i
-            stroke.Parent = parent
-            stroke.Color = layer.color
-            stroke.Thickness = layer.thickness
-            stroke.Transparency = layer.transparency
-            stroke.LineJoinMode = Enum.LineJoinMode.Round
-            stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-            table.insert(strokes, stroke)
-        end
-        return strokes
-    end
-
-    local gradientStrokes = addGradientStroke(ToggleButton)
-
-    local uihide = false
-    ToggleButton.MouseButton1Click:Connect(function()
-        spawn(function()
-            Ripple(ToggleButton)
-        end)
-    end)
-
-    ToggleButton.MouseButton1Click:Connect(function()
-        if not uihide then
-            uihide = true
-            ToggleButton.Text = windowName
-            Main:TweenPosition(UDim2.new(0.5, 0, 2, 0), "Out", "Sine", 0.9, true)
-            task.delay(0.5, function()
-                if Main.Parent then
-                    Main.Visible = false
-                end
-            end)
-        else
-            Main.Visible = true
-            ToggleButton.Text = windowName
-            Main:TweenPosition(UDim2.new(0.5, 0, 0.5, 0), "Out", "Sine", 0.5, true)
-            uihide = false
-        end
-    end)
-
-    drag(ToggleButton, ToggleButton)
+    drag(ToggleContainer, ToggleContainer)
     drag(Main)
 
-    UIG.Parent = ToggleButton
+    local themes = {
+        default = {
+            name = "Default",
+            bgTransparency = 0.6,
+            mainColor = Color3.fromRGB(0,0,0),
+            backgroundColor = Color3.fromRGB(0,0,0),
+            sideColor = Color3.fromRGB(0,0,0),
+            beijingColor = Color3.fromRGB(0,0,0),
+            textColor = Color3.fromRGB(255,255,255),
+            textGradient = ColorSequence.new({
+                ColorSequenceKeypoint.new(0, Color3.fromRGB(255,255,255)),
+                ColorSequenceKeypoint.new(1, Color3.fromRGB(255,255,255))
+            })
+        },
+        sakura = {
+            name = "Sakura",
+            bgTransparency = 0.6,
+            mainColor = Color3.fromRGB(255,200,200),
+            backgroundColor = Color3.fromRGB(255,200,200),
+            sideColor = Color3.fromRGB(255,200,200),
+            beijingColor = Color3.fromRGB(255,200,200),
+            textColor = Color3.fromRGB(255,255,255),
+            textGradient = ColorSequence.new({
+                ColorSequenceKeypoint.new(0, Color3.fromRGB(255,192,203)),
+                ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255,105,180)),
+                ColorSequenceKeypoint.new(1, Color3.fromRGB(255,192,203))
+            })
+        }
+    }
+
+    local function applyTheme(themeName)
+        local theme = themes[themeName] or themes.default
+        MainColor = theme.mainColor
+        Background = theme.backgroundColor
+        zyColor = theme.sideColor
+        beijingColor = theme.beijingColor
+        Rainmiao.flags.text_color = theme.textColor
+
+        Main.BackgroundColor3 = Background
+        Main.BackgroundTransparency = Rainmiao.flags.ui_transparency or theme.bgTransparency
+        DropShadow.ImageTransparency = Main.BackgroundTransparency
+        SideG.Color = ColorSequence.new(zyColor)
+        if ScriptTitle and ScriptTitle.UIGradient then
+            ScriptTitle.UIGradient.Color = theme.textGradient
+        end
+        Rainmiao:RefreshTextStyling()
+
+        for _, tab in ipairs(TabMain:GetChildren()) do
+            if tab:IsA("ScrollingFrame") then
+                for _, section in ipairs(tab:GetChildren()) do
+                    if section.Name == "Section" then
+                        for _, obj in ipairs(section.Objs:GetChildren()) do
+                            if obj:IsA("Frame") then
+                                for _, btn in ipairs(obj:GetChildren()) do
+                                    if btn:IsA("TextButton") and btn.Name ~= "MinSlider" and btn.Name ~= "AddSlider" then
+                                        btn.BackgroundColor3 = zyColor
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    local minimized = false
+    local originalSize = Main.Size
+    local originalPosition = Main.Position
+    local originalAnchor = Main.AnchorPoint
+
+    ToggleButton.MouseButton1Click:Connect(function()
+        spawn(function() Ripple(ToggleButton) end)
+        if not minimized then
+            minimized = true
+            ToggleButton.Text = windowName
+            local targetCenter = Vector2.new(
+                ToggleContainer.AbsolutePosition.X + ToggleContainer.AbsoluteSize.X/2,
+                ToggleContainer.AbsolutePosition.Y + ToggleContainer.AbsoluteSize.Y/2
+            )
+            local targetPosUDim = UDim2.new(0, targetCenter.X, 0, targetCenter.Y)
+            local targetSize = UDim2.new(0, 50, 0, 50)
+            local tween = services.TweenService:Create(Main, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                Position = targetPosUDim,
+                Size = targetSize
+            })
+            tween:Play()
+            tween.Completed:Connect(function()
+                Main.Visible = false
+            end)
+        else
+            minimized = false
+            Main.Visible = true
+            local tween = services.TweenService:Create(Main, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                Position = originalPosition,
+                Size = originalSize
+            })
+            tween:Play()
+        end
+    end)
 
     local window = {}
 
@@ -611,7 +600,7 @@ function tnine.new(tnine, name, theme)
             switchTab({ TabIco, Tab })
         end)
 
-        if tnine.currentTab == nil then
+        if Rainmiao.currentTab == nil then
             switchTab({ TabIco, Tab })
         end
 
@@ -740,7 +729,7 @@ function tnine.new(tnine, name, theme)
 
                 BtnC.Name = "BtnC"
                 BtnC.Parent = Btn
-                BtnC.CornerRadius = UDim.new(0, tnine.flags.btn_corner or 6)
+                BtnC.CornerRadius = UDim.new(0, Rainmiao.flags.btn_corner or 6)
 
                 Btn.MouseButton1Click:Connect(function()
                     spawn(function()
@@ -760,7 +749,7 @@ function tnine.new(tnine, name, theme)
                 LabelModule.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
                 LabelModule.BackgroundTransparency = 1.000
                 LabelModule.BorderSizePixel = 0
-                LabelModule.Position = UDim2.new(0, 0, NAN, 0)
+                LabelModule.Position = UDim2.new(0, 0, 0, 0)
                 LabelModule.Size = UDim2.new(0, 428, 0, 19)
 
                 TextLabel.Parent = LabelModule
@@ -784,7 +773,7 @@ function tnine.new(tnine, name, theme)
                 local enabled = enabled or false
                 assert(text, "No text provided")
                 assert(flag, "No flag provided")
-                tnine.flags[flag] = enabled
+                Rainmiao.flags[flag] = enabled
 
                 local ToggleModule = Instance.new("Frame")
                 local ToggleBtn = Instance.new("TextButton")
@@ -844,14 +833,14 @@ function tnine.new(tnine, name, theme)
                 local funcs = {
                     SetState = function(self, state)
                         if state == nil then
-                            state = not tnine.flags[flag]
+                            state = not Rainmiao.flags[flag]
                         end
-                        if tnine.flags[flag] == state then return end
+                        if Rainmiao.flags[flag] == state then return end
                         services.TweenService:Create(ToggleSwitch, TweenInfo.new(0.2), {
                             Position = UDim2.new(0, (state and ToggleSwitch.Size.X.Offset / 2 or 0), 0, 0),
                             BackgroundColor3 = (state and Color3.fromRGB(255, 255, 255) or beijingColor)
                         }):Play()
-                        tnine.flags[flag] = state
+                        Rainmiao.flags[flag] = state
                         callback(state)
                     end,
                     Module = ToggleModule
@@ -994,7 +983,7 @@ function tnine.new(tnine, name, theme)
                 assert(text, "No text provided")
                 assert(flag, "No flag provided")
                 assert(default, "No default text provided")
-                tnine.flags[flag] = default
+                Rainmiao.flags[flag] = default
 
                 local TextboxModule = Instance.new("Frame")
                 local TextboxBack = Instance.new("TextButton")
@@ -1071,7 +1060,7 @@ function tnine.new(tnine, name, theme)
                     if TextBox.Text == "" then
                         TextBox.Text = default
                     end
-                    tnine.flags[flag] = TextBox.Text
+                    Rainmiao.flags[flag] = TextBox.Text
                     callback(TextBox.Text)
                 end)
 
@@ -1087,7 +1076,7 @@ function tnine.new(tnine, name, theme)
                 local max = max or 10
                 local default = default or min
                 local precise = precise or false
-                tnine.flags[flag] = default
+                Rainmiao.flags[flag] = default
 
                 assert(text, "No text provided")
                 assert(flag, "No flag provided")
@@ -1222,7 +1211,7 @@ function tnine.new(tnine, name, theme)
                         else
                             value = value or math.floor(min + (max - min) * percent)
                         end
-                        tnine.flags[flag] = tonumber(value)
+                        Rainmiao.flags[flag] = tonumber(value)
                         SliderValue.Text = tostring(value)
                         SliderPart.Size = UDim2.new(percent, 0, 1, 0)
                         callback(tonumber(value))
@@ -1230,13 +1219,13 @@ function tnine.new(tnine, name, theme)
                 }
 
                 MinSlider.MouseButton1Click:Connect(function()
-                    local currentValue = tnine.flags[flag]
+                    local currentValue = Rainmiao.flags[flag]
                     currentValue = math.clamp(currentValue - 1, min, max)
                     funcs:SetValue(currentValue)
                 end)
 
                 AddSlider.MouseButton1Click:Connect(function()
-                    local currentValue = tnine.flags[flag]
+                    local currentValue = Rainmiao.flags[flag]
                     currentValue = math.clamp(currentValue + 1, min, max)
                     funcs:SetValue(currentValue)
                 end)
@@ -1317,7 +1306,7 @@ function tnine.new(tnine, name, theme)
                 local options = options or {}
                 assert(text, "No text provided")
                 assert(flag, "No flag provided")
-                tnine.flags[flag] = nil
+                Rainmiao.flags[flag] = nil
 
                 local DropdownModule = Instance.new("Frame")
                 local DropdownTop = Instance.new("TextButton")
@@ -1467,7 +1456,7 @@ function tnine.new(tnine, name, theme)
                         ToggleDropVis()
                         callback(Option.Text)
                         DropdownText.Text = Option.Text
-                        tnine.flags[flag] = Option.Text
+                        Rainmiao.flags[flag] = Option.Text
                     end)
                 end
 
@@ -1500,39 +1489,21 @@ function tnine.new(tnine, name, theme)
         return tab
     end
 
-    local function extractImageId(input)
-        if not input or input == "" then return nil end
-        local id = input:match("%d+")
-        return id and tonumber(id) or nil
-    end
+    local settingsTab = window:Tab("Settings", "settings")
+    local settingsSection = settingsTab:section("UI Settings", true)
+    settingsSection:Slider("Background Transparency", "ui_transparency", 0.6, 0, 1, true, function(value)
+        Rainmiao.flags.ui_transparency = value
+        Main.BackgroundTransparency = value
+        DropShadow.ImageTransparency = value
+    end)
+    settingsSection:Dropdown("Theme", "ui_theme", {"Default", "Sakura"}, function(selected)
+        Rainmiao.flags.ui_theme = selected
+        applyTheme(selected)
+    end)
 
-    window.SetMainBackground = function(self, imageInput)
-        local id = extractImageId(imageInput)
-        local bg = Main:FindFirstChild("MainBackground")
-        if bg then
-            if id then
-                bg.Image = "rbxassetid://" .. id
-                bg.ImageTransparency = 0
-            else
-                bg.ImageTransparency = 1
-            end
-        end
-    end
-
-    window.SetToggleBackground = function(self, imageInput)
-        local id = extractImageId(imageInput)
-        local bg = ToggleButton:FindFirstChild("ButtonBackground")
-        if bg then
-            if id then
-                bg.Image = "rbxassetid://" .. id
-                bg.ImageTransparency = 0
-            else
-                bg.ImageTransparency = 1
-            end
-        end
-    end
+    applyTheme("default")
 
     return window
 end
 
-return tnine
+return Rainmiao
