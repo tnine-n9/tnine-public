@@ -1,7 +1,5 @@
 {
-  "KEYVex1": "2006_Painfulwords",
-  "KEYVex2": "PlayerTwo",
-  "KEYVex3": ""
-  "KEYVex4": ""
-  "KEYVex5": ""
+  "VEX-ABCD-1234": "2006_Painfulwords",
+  "VEX-EFGH-5678": "PlayerTwo",
+  "VEX-IJKL-9012": "PlayerThree"
 }
