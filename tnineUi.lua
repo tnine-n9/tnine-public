@@ -127,12 +127,12 @@ function Rainmiao.new(Rainmiao, name, theme)
     end
 
     local bgTransparency = 0.6
-    local black = Color3.fromRGB(0, 0, 0)
+    local glassColor = Color3.fromRGB(255, 255, 255)
 
-    MainColor = black
-    Background = black
-    zyColor = black
-    beijingColor = black
+    MainColor = glassColor
+    Background = glassColor
+    zyColor = glassColor
+    beijingColor = glassColor
 
     local icons = {}
     spawn(function()
@@ -162,7 +162,6 @@ function Rainmiao.new(Rainmiao, name, theme)
     local TabMain = Instance.new("Frame")
     local MainC = Instance.new("UICorner")
     local Side = Instance.new("Frame")
-    local SideG = Instance.new("UIGradient")
     local TabBtns = Instance.new("ScrollingFrame")
     local TabBtnsL = Instance.new("UIListLayout")
     local ScriptTitle = Instance.new("TextLabel")
@@ -196,9 +195,9 @@ function Rainmiao.new(Rainmiao, name, theme)
     Main.Name = "Main"
     Main.Parent = dogent
     Main.AnchorPoint = Vector2.new(0.5, 0.5)
-    Main.BackgroundColor3 = Background
-    Main.BackgroundTransparency = bgTransparency
-    Main.BorderColor3 = MainColor
+    Main.BackgroundColor3 = glassColor
+    Main.BackgroundTransparency = 0.5
+    Main.BorderColor3 = glassColor
     Main.Position = UDim2.new(0.5, 0, 0.5, 0)
     Main.Size = UDim2.new(0, 572, 0, 353)
     Main.ZIndex = 1
@@ -280,11 +279,6 @@ function Rainmiao.new(Rainmiao, name, theme)
     Side.Position = UDim2.new(0, 0, 0, 0)
     Side.Size = UDim2.new(0, 110, 0, 353)
     Side.BackgroundTransparency = 1
-
-    SideG.Color = ColorSequence.new { ColorSequenceKeypoint.new(0.00, zyColor), ColorSequenceKeypoint.new(1.00, zyColor) }
-    SideG.Rotation = 90
-    SideG.Name = "SideG"
-    SideG.Parent = Side
 
     TabBtns.Name = "TabBtns"
     TabBtns.Parent = Side
@@ -430,40 +424,6 @@ function Rainmiao.new(Rainmiao, name, theme)
     ToggleContainer.Position = UDim2.new(0, 10, 0, 10)
     ToggleContainer.Size = UDim2.new(0, 50, 0, 50)
     ToggleContainer.ZIndex = 5
-
-    local RainbowBG = Instance.new("ImageLabel")
-    RainbowBG.Name = "RainbowBG"
-    RainbowBG.Parent = ToggleContainer
-    RainbowBG.BackgroundColor3 = Color3.new(1,1,1)
-    RainbowBG.BackgroundTransparency = 1
-    RainbowBG.Size = UDim2.new(1,0,1,0)
-    RainbowBG.Position = UDim2.new(0,0,0,0)
-    RainbowBG.ZIndex = 0
-    RainbowBG.Image = "rbxassetid://0"
-    RainbowBG.ImageColor3 = Color3.new(1,1,1)
-    RainbowBG.ImageTransparency = 0
-    local RainbowBGCorner = Instance.new("UICorner")
-    RainbowBGCorner.CornerRadius = UDim.new(0.5, 0)
-    RainbowBGCorner.Parent = RainbowBG
-
-    local RainbowGradient = Instance.new("UIGradient")
-    RainbowGradient.Color = ColorSequence.new {
-        ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 0)),
-        ColorSequenceKeypoint.new(0.10, Color3.fromRGB(255, 127, 0)),
-        ColorSequenceKeypoint.new(0.20, Color3.fromRGB(255, 255, 0)),
-        ColorSequenceKeypoint.new(0.30, Color3.fromRGB(0, 255, 0)),
-        ColorSequenceKeypoint.new(0.40, Color3.fromRGB(0, 255, 255)),
-        ColorSequenceKeypoint.new(0.50, Color3.fromRGB(0, 0, 255)),
-        ColorSequenceKeypoint.new(0.60, Color3.fromRGB(139, 0, 255)),
-        ColorSequenceKeypoint.new(0.70, Color3.fromRGB(255, 0, 0)),
-        ColorSequenceKeypoint.new(0.80, Color3.fromRGB(255, 127, 0)),
-        ColorSequenceKeypoint.new(0.90, Color3.fromRGB(255, 255, 0)),
-        ColorSequenceKeypoint.new(1.00, Color3.fromRGB(0, 255, 0))
-    }
-    RainbowGradient.Parent = RainbowBG
-
-    local rainbowTween = TweenService:Create(RainbowGradient, TweenInfo.new(7, Enum.EasingStyle.Linear, Enum.EasingDirection.In, -1), { Rotation = 360 })
-    rainbowTween:Play()
 
     local ToggleButton = Instance.new("TextButton")
     ToggleButton.Name = "ToggleButton"
@@ -697,8 +657,8 @@ function Rainmiao.new(Rainmiao, name, theme)
 
                 Btn.Name = "Btn"
                 Btn.Parent = BtnModule
-                Btn.BackgroundColor3 = zyColor
-                Btn.BackgroundTransparency = bgTransparency
+                Btn.BackgroundColor3 = glassColor
+                Btn.BackgroundTransparency = 0.5
                 Btn.BorderSizePixel = 0
                 Btn.Size = UDim2.new(0, 428, 0, 38)
                 Btn.AutoButtonColor = false
@@ -734,8 +694,8 @@ function Rainmiao.new(Rainmiao, name, theme)
                 LabelModule.Size = UDim2.new(0, 428, 0, 19)
 
                 TextLabel.Parent = LabelModule
-                TextLabel.BackgroundColor3 = zyColor
-                TextLabel.BackgroundTransparency = bgTransparency
+                TextLabel.BackgroundColor3 = glassColor
+                TextLabel.BackgroundTransparency = 0.5
                 TextLabel.Size = UDim2.new(0, 428, 0, 22)
                 TextLabel.Font = Enum.Font.GothamSemibold
                 TextLabel.Text = text
@@ -774,8 +734,8 @@ function Rainmiao.new(Rainmiao, name, theme)
 
                 ToggleBtn.Name = "ToggleBtn"
                 ToggleBtn.Parent = ToggleModule
-                ToggleBtn.BackgroundColor3 = zyColor
-                ToggleBtn.BackgroundTransparency = bgTransparency
+                ToggleBtn.BackgroundColor3 = glassColor
+                ToggleBtn.BackgroundTransparency = 0.5
                 ToggleBtn.BorderSizePixel = 0
                 ToggleBtn.Size = UDim2.new(0, 428, 0, 38)
                 ToggleBtn.AutoButtonColor = false
@@ -791,16 +751,16 @@ function Rainmiao.new(Rainmiao, name, theme)
 
                 ToggleDisable.Name = "ToggleDisable"
                 ToggleDisable.Parent = ToggleBtn
-                ToggleDisable.BackgroundColor3 = Background
-                ToggleDisable.BackgroundTransparency = bgTransparency
+                ToggleDisable.BackgroundColor3 = glassColor
+                ToggleDisable.BackgroundTransparency = 0.5
                 ToggleDisable.BorderSizePixel = 0
                 ToggleDisable.Position = UDim2.new(0.901869178, 0, 0.208881587, 0)
                 ToggleDisable.Size = UDim2.new(0, 36, 0, 22)
 
                 ToggleSwitch.Name = "ToggleSwitch"
                 ToggleSwitch.Parent = ToggleDisable
-                ToggleSwitch.BackgroundColor3 = beijingColor
-                ToggleSwitch.BackgroundTransparency = bgTransparency
+                ToggleSwitch.BackgroundColor3 = glassColor
+                ToggleSwitch.BackgroundTransparency = 0.5
                 ToggleSwitch.Size = UDim2.new(0, 24, 0, 22)
 
                 ToggleSwitchC.CornerRadius = UDim.new(0, 6)
@@ -819,7 +779,7 @@ function Rainmiao.new(Rainmiao, name, theme)
                         if Rainmiao.flags[flag] == state then return end
                         services.TweenService:Create(ToggleSwitch, TweenInfo.new(0.2), {
                             Position = UDim2.new(0, (state and ToggleSwitch.Size.X.Offset / 2 or 0), 0, 0),
-                            BackgroundColor3 = (state and Color3.fromRGB(255, 255, 255) or beijingColor)
+                            BackgroundColor3 = (state and Color3.fromRGB(255, 255, 255) or glassColor)
                         }):Play()
                         Rainmiao.flags[flag] = state
                         callback(state)
@@ -887,8 +847,8 @@ function Rainmiao.new(Rainmiao, name, theme)
 
                 KeybindBtn.Name = "KeybindBtn"
                 KeybindBtn.Parent = KeybindModule
-                KeybindBtn.BackgroundColor3 = zyColor
-                KeybindBtn.BackgroundTransparency = bgTransparency
+                KeybindBtn.BackgroundColor3 = glassColor
+                KeybindBtn.BackgroundTransparency = 0.5
                 KeybindBtn.BorderSizePixel = 0
                 KeybindBtn.Size = UDim2.new(0, 428, 0, 38)
                 KeybindBtn.AutoButtonColor = false
@@ -904,8 +864,8 @@ function Rainmiao.new(Rainmiao, name, theme)
 
                 KeybindValue.Name = "KeybindValue"
                 KeybindValue.Parent = KeybindBtn
-                KeybindValue.BackgroundColor3 = Background
-                KeybindValue.BackgroundTransparency = bgTransparency
+                KeybindValue.BackgroundColor3 = glassColor
+                KeybindValue.BackgroundTransparency = 0.5
                 KeybindValue.BorderSizePixel = 0
                 KeybindValue.Position = UDim2.new(0.763033211, 0, 0.289473683, 0)
                 KeybindValue.Size = UDim2.new(0, 100, 0, 28)
@@ -985,8 +945,8 @@ function Rainmiao.new(Rainmiao, name, theme)
 
                 TextboxBack.Name = "TextboxBack"
                 TextboxBack.Parent = TextboxModule
-                TextboxBack.BackgroundColor3 = zyColor
-                TextboxBack.BackgroundTransparency = bgTransparency
+                TextboxBack.BackgroundColor3 = glassColor
+                TextboxBack.BackgroundTransparency = 0.5
                 TextboxBack.BorderSizePixel = 0
                 TextboxBack.Size = UDim2.new(0, 428, 0, 38)
                 TextboxBack.AutoButtonColor = false
@@ -1002,8 +962,8 @@ function Rainmiao.new(Rainmiao, name, theme)
 
                 BoxBG.Name = "BoxBG"
                 BoxBG.Parent = TextboxBack
-                BoxBG.BackgroundColor3 = Background
-                BoxBG.BackgroundTransparency = bgTransparency
+                BoxBG.BackgroundColor3 = glassColor
+                BoxBG.BackgroundTransparency = 0.5
                 BoxBG.BorderSizePixel = 0
                 BoxBG.Position = UDim2.new(0.763033211, 0, 0.289473683, 0)
                 BoxBG.Size = UDim2.new(0, 100, 0, 28)
@@ -1086,8 +1046,8 @@ function Rainmiao.new(Rainmiao, name, theme)
 
                 SliderBack.Name = "SliderBack"
                 SliderBack.Parent = SliderModule
-                SliderBack.BackgroundColor3 = zyColor
-                SliderBack.BackgroundTransparency = bgTransparency
+                SliderBack.BackgroundColor3 = glassColor
+                SliderBack.BackgroundTransparency = 0.5
                 SliderBack.BorderSizePixel = 0
                 SliderBack.Size = UDim2.new(0, 428, 0, 38)
                 SliderBack.AutoButtonColor = false
@@ -1104,8 +1064,8 @@ function Rainmiao.new(Rainmiao, name, theme)
                 SliderBar.Name = "SliderBar"
                 SliderBar.Parent = SliderBack
                 SliderBar.AnchorPoint = Vector2.new(0, 0.5)
-                SliderBar.BackgroundColor3 = Background
-                SliderBar.BackgroundTransparency = bgTransparency
+                SliderBar.BackgroundColor3 = glassColor
+                SliderBar.BackgroundTransparency = 0.5
                 SliderBar.BorderSizePixel = 0
                 SliderBar.Position = UDim2.new(0.369000018, 40, 0.5, 0)
                 SliderBar.Size = UDim2.new(0, 140, 0, 12)
@@ -1117,7 +1077,7 @@ function Rainmiao.new(Rainmiao, name, theme)
                 SliderPart.Name = "SliderPart"
                 SliderPart.Parent = SliderBar
                 SliderPart.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-                SliderPart.BackgroundTransparency = bgTransparency
+                SliderPart.BackgroundTransparency = 0.5
                 SliderPart.BorderSizePixel = 0
                 SliderPart.Size = UDim2.new(0, 54, 0, 13)
 
@@ -1127,8 +1087,8 @@ function Rainmiao.new(Rainmiao, name, theme)
 
                 SliderValBG.Name = "SliderValBG"
                 SliderValBG.Parent = SliderBack
-                SliderValBG.BackgroundColor3 = Background
-                SliderValBG.BackgroundTransparency = bgTransparency
+                SliderValBG.BackgroundColor3 = glassColor
+                SliderValBG.BackgroundTransparency = 0.5
                 SliderValBG.BorderSizePixel = 0
                 SliderValBG.Position = UDim2.new(0.883177578, 0, 0.131578952, 0)
                 SliderValBG.Size = UDim2.new(0, 44, 0, 28)
@@ -1307,8 +1267,8 @@ function Rainmiao.new(Rainmiao, name, theme)
 
                 DropdownTop.Name = "DropdownTop"
                 DropdownTop.Parent = DropdownModule
-                DropdownTop.BackgroundColor3 = zyColor
-                DropdownTop.BackgroundTransparency = bgTransparency
+                DropdownTop.BackgroundColor3 = glassColor
+                DropdownTop.BackgroundTransparency = 0.5
                 DropdownTop.BorderSizePixel = 0
                 DropdownTop.Size = UDim2.new(0, 428, 0, 38)
                 DropdownTop.AutoButtonColor = false
@@ -1418,8 +1378,8 @@ function Rainmiao.new(Rainmiao, name, theme)
                     local OptionC = Instance.new("UICorner")
                     Option.Name = "Option_" .. option
                     Option.Parent = DropdownModule
-                    Option.BackgroundColor3 = zyColor
-                    Option.BackgroundTransparency = bgTransparency
+                    Option.BackgroundColor3 = glassColor
+                    Option.BackgroundTransparency = 0.5
                     Option.BorderSizePixel = 0
                     Option.Position = UDim2.new(0, 0, 0.328125, 0)
                     Option.Size = UDim2.new(0, 428, 0, 26)
