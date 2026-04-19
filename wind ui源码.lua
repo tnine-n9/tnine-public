@@ -11923,22 +11923,22 @@ return F
 end
 
 
-as:CreateTopbarButton("关闭","x",function()
+as:CreateTopbarButton("Close","x",function()
 if not as.IgnoreAlerts then
 as:SetToTheCenter()
 as:Dialog{
 
-Title="关闭脚本",
-Content="用户 请继续放心游玩 加入717897412(QQ群)与我们进行交流",
+Title="“Close the Script window?",
+Content="Please continue to enjoy the game. Join the QQ group 717897412 to communicate with us.",
 Buttons={
 {
-Title="不关闭",
+Title="Stay Open.",
 
 Callback=function()end,
 Variant="Secondary",
 },
 {
-Title="关闭",
+Title="Close",
 
 Callback=function()as:Destroy()end,
 Variant="Primary",
