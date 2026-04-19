@@ -81,7 +81,7 @@ l.SetIconsType"lucide"
 local m
 
 local p={
-Font="rbxassetid://12187365364",
+Font="rbxasset://fonts/families/GothamSSm.json",
 Localization=nil,
 CanDraggable=true,
 Theme=nil,
@@ -11928,7 +11928,7 @@ if not as.IgnoreAlerts then
 as:SetToTheCenter()
 as:Dialog{
 
-Title="“Close the Script window?",
+Title="Close the Script window?",
 Content="Please continue to enjoy the game. Join the QQ group 717897412 to communicate with us.",
 Buttons={
 {
