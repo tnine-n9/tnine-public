@@ -11929,7 +11929,7 @@ as:SetToTheCenter()
 as:Dialog{
 
 Title="关闭脚本",
-Content="你真的想关掉Xcellent Efficiency Hub吗",
+Content="用户 请继续放心游玩 加入717897412(QQ群)与我们进行交流",
 Buttons={
 {
 Title="不关闭",
